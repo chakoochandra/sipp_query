@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # WhatsApp Alert Config
-WA_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjNiMjIyZWY1MmJjMzc4MDYxM2U1OSIsInVzZXJuYW1lIjoiY2hhbmRyYSIsImlhdCI6MTcxNzc0Nzc4NywiZXhwIjo0ODczNTA3Nzg3fQ.KIqEs7rELJzVj2hk6WJqCiYy0T0Mz7G5vbiy4gFLRQ0"
-WA_SESSION="pasda"
-WA_TARGET="08988588885"
+WA_TOKEN=""
+WA_SESSION=""
+WA_TARGET=""
 
 if [ -n "$WA_TOKEN" ] && [ -n "$WA_SESSION" ] && [ -n "$WA_TARGET" ]; then
 	THRESHOLD=90
