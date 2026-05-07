@@ -1,0 +1,42 @@
+SELECT `pe`.`efiling_id`, `pp`.`panitera_id`, `jd`.`edoc_bas`, CASE 
+				WHEN jd.edoc_bas IS NOT NULL THEN NULL
+				ELSE (SELECT pasidoa14_joss.WorkingDaysBetween(jd.tanggal_sidang, CURRENT_DATE)) 
+			END AS diff_days, `p`.`nomor_perkara`, `jd`.`tanggal_sidang`, `p`.`para_pihak`, `jd`.`agenda`, `hk`.`hakim_nama`, `pp`.`panitera_nama`, `jd`.`keterangan`, `p`.`jenis_perkara_nama`, `p`.`tanggal_putusan`
+FROM `perkara_jadwal_sidang` `jd`
+LEFT JOIN (SELECT `hakim_id`, `perkara_id`, MAX(tanggal_penetapan) AS tanggal_penetapan, `hakim_nama`
+FROM `perkara_hakim_pn`
+WHERE `urutan` = '1'
+AND `aktif` = 'Y'
+GROUP BY `perkara_id`) AS hk ON `jd`.`perkara_id` = `hk`.`perkara_id`
+LEFT JOIN (SELECT `perkara_id`, MAX(tanggal_penetapan) AS tanggal_penetapan, `nama_gelar` AS `panitera_nama`, `panitera_pn`.`aktif`, `panitera_id`
+FROM `perkara_panitera_pn`
+INNER JOIN `panitera_pn` ON `panitera_pn`.`id` = `perkara_panitera_pn`.`panitera_id`
+WHERE `perkara_panitera_pn`.`urutan` = 1
+AND `perkara_panitera_pn`.`aktif` = 'Y'
+GROUP BY `perkara_panitera_pn`.`perkara_id`) AS pp ON `jd`.`perkara_id` = `pp`.`perkara_id`
+LEFT JOIN (SELECT `perkara_id`, MIN(efiling_id) AS efiling_id
+FROM `perkara_efiling_id`
+GROUP BY `perkara_id`) AS pe ON `pe`.`perkara_id` = `jd`.`perkara_id`
+INNER JOIN `v_perkara` `p` ON `jd`.`perkara_id` = `p`.`perkara_id`
+WHERE `p`.`alur_perkara_id` != 114
+AND   (
+`pp`.`aktif` = 'Y'
+OR pp.panitera_id IN (SELECT DISTINCT pp_sub.id
+				FROM perkara_jadwal_sidang jd_sub
+				INNER JOIN perkara_panitera_pn ppn_sub ON ppn_sub.perkara_id = jd_sub.perkara_id AND ppn_sub.urutan = 1 AND ppn_sub.aktif = 'Y'
+				INNER JOIN panitera_pn pp_sub ON pp_sub.id = ppn_sub.panitera_id
+				INNER JOIN perkara p_sub ON jd_sub.perkara_id = p_sub.perkara_id
+				WHERE jd_sub.edoc_bas IS NULL
+				AND p_sub.alur_perkara_id != 114  -- Exclude lalu lintas
+				AND YEAR(jd_sub.tanggal_sidang) = YEAR(CURDATE())
+				AND jd_sub.tanggal_sidang <= CURDATE())
+ )
+AND `jd`.`edoc_bas` IS NULL
+AND `jd`.`tanggal_sidang` <= CURDATE()
+AND YEAR(jd.tanggal_sidang) = YEAR(CURDATE())
+ORDER BY 
+    pp.panitera_nama ASC,
+    jd.tanggal_sidang ASC,
+    diff_days DESC,
+    p.alur_perkara_id ASC,
+    jd.perkara_id ASC
