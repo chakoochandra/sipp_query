@@ -1,6 +1,6 @@
 ## Project Lain
 Project saya yang lain:
-- [Noisy](https://github.com/chakoochandra/noisy)
+- [Dashboard & Notifikasi SIPP](https://github.com/chakoochandra/myapp)
 - [eTamu](https://github.com/chakoochandra/etamu)
 - [Monitoring Perkara Kecamatan](https://github.com/chakoochandra/perkara-kecamatan)
 - [e-Court TTE Helper](https://github.com/chakoochandra/ecourt-tte-helper)
