@@ -7,5 +7,5 @@ Project saya yang lain:
 - [Kumpulan Query SIPP](https://github.com/chakoochandra/sipp_query)
 
   
-## Support
+## Contact
 Yuk, ngobrol langsung di sini 👉 [https://dialogwa.web.id/](https://dialogwa.web.id/) 
