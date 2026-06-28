@@ -8,8 +8,4 @@ Project saya yang lain:
 
   
 ## Support
-
-Butuh aplikasi monitoring lain? Ada pertanyaan yang bikin kening berkerut?
-Atau cuma mau traktir saya secangkir kopi dan sekotak pizza biar kodingnya makin ngebut?
-
-Yuk, ngobrol langsung di sini 👉 [Chat me](https://dialogwa.web.id/chat/6287778299688) 
+Yuk, ngobrol langsung di sini 👉 [https://dialogwa.web.id/](https://dialogwa.web.id/) 
